@@ -43,7 +43,7 @@ steps:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/tweet-crawler-repo/tweet-crawler:$SHORT_SHA'
 # [END cloudbuild]
 
-# Access the id_github file from Secret Manager...
+# Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
   id: Get Github SSH key
   entrypoint: 'bash'
