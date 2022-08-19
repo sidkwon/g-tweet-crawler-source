@@ -66,3 +66,27 @@ steps:
   volumes:
   - name: 'ssh'
     path: /root/.ssh
+    
+# Edit Kustomize layer in config repo and push changes to dev branch
+- name: gcr.io/cloud-builders/git
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    echo "Cloning repo ..."
+    git clone --depth 1 git@github.com:sidkwon/g-tweet-crawler-k8s.git
+    echo "Updating image tag version ..."
+    cd g-tweet-crawler-k8s
+    ls
+    sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" test.txt | \
+    sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/test.yaml
+    echo "Pushing changes to git config repo ..."
+    git config --global user.name sidkwon
+    git config --global user.email annakie.kwon@gmail.com
+    git checkout -b dev
+    git add -A
+    git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
+    git push origin main
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
