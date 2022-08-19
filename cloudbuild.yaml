@@ -15,14 +15,14 @@
 # [START cloudbuild]
 steps:
 # This step runs the unit tests on the app
-- name: 'python:3.7-slim'
-  id: Test
-  entrypoint: /bin/sh
-  args:
-  - -c
-  - 'pip install -r requirements.txt && python tweet_crawler.py -v'
-  env:
-  - BEARER_TOKEN='AAA'
+# - name: 'python:3.7-slim'
+#   id: Test
+#   entrypoint: /bin/sh
+#   args:
+#   - -c
+#   - 'pip install -r requirements.txt && python tweet_crawler.py -v'
+#   env:
+#   - BEARER_TOKEN='AAA'
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'
