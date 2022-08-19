@@ -81,6 +81,7 @@ steps:
   - '-c'
   - |
     echo "Cloning repo ..."
+    cd
     git clone --depth 1 git@github.com:sidkwon/g-tweet-crawler-k8s.git
     echo "Updating image tag version ..."
     cd g-tweet-crawler-k8s
