@@ -94,8 +94,9 @@ steps:
     git config --global user.email annakie.kwon@gmail.com
     git checkout -b dev
     git add -A
+    git status
     git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
-    git push origin main
+    git push origin dev
   volumes:
   - name: 'ssh'
     path: /root/.ssh
