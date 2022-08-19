@@ -47,7 +47,11 @@ steps:
 - name: gcr.io/cloud-builders/gcloud
   id: Get Github SSH key
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github' ]
+  args: 
+  - '-c'
+  - |
+    gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github
+    cat /root/.ssh/id_github
   volumes:
   - name: 'ssh'
     path: /root/.ssh
