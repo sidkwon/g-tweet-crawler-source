@@ -85,6 +85,7 @@ steps:
     git clone --depth 1 git@github.com:sidkwon/g-tweet-crawler-k8s.git
     echo "Updating image tag version ..."
     cd g-tweet-crawler-k8s
+    mkdir dev
     ls
     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" test.txt | \
     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/test.yaml
