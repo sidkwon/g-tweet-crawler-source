@@ -45,6 +45,7 @@ steps:
 
 # Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
+  id: Get Github SSH key
   entrypoint: 'bash'
   args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github' ]
   volumes:
@@ -53,6 +54,7 @@ steps:
 
 # Set up git with key and domain.
 - name: 'gcr.io/cloud-builders/git'
+  id: Set up Github SSH key
   entrypoint: 'bash'
   args:
   - '-c'
@@ -69,6 +71,7 @@ steps:
     
 # Edit Kustomize layer in config repo and push changes to dev branch
 - name: gcr.io/cloud-builders/git
+  id: Push k8s manifest to dev branch
   entrypoint: 'bash'
   args:
   - '-c'
