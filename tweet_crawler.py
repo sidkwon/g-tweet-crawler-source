@@ -3,9 +3,31 @@ import os
 import json
 
 from google.cloud import pubsub_v1
+from google.cloud import secretmanager
+import urllib.request
 
-# Config
-BEARER_TOKEN=os.environ["BEARER_TOKEN"]
+# Get project information (project id, project number)
+def get_project_info(info):
+    url = "http://metadata.google.internal/computeMetadata/v1/project/{}".format(info)
+    req = urllib.request.Request(url)
+    req.add_header("Metadata-Flavor", "Google")
+    return urllib.request.urlopen(req).read().decode()
+
+# Variables
+project_id = get_project_info("project-id")
+project_number = get_project_info("numeric-project-id")
+
+# ID of the secret to create.
+secret_id = "BEARER_TOKEN"
+secret_version_id = "1"
+secret_version_name = "projects/{}/secrets/{}/versions/{}".format(project_number, secret_id, secret_version_id)
+
+# Get BEARER_TOKEN from Secret Manager
+client = secretmanager.SecretManagerServiceClient()
+response = client.access_secret_version(request={"name": secret_version_name})
+BEARER_TOKEN = response.payload.data.decode("UTF-8")
+
+# Create Cloud PubSub client
 publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path("arched-iterator-357101", "tweet-topic")
 tweet_fields = ["created_at", "lang", "geo", "author_id", "public_metrics"]
