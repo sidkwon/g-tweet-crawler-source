@@ -87,8 +87,8 @@ steps:
     cd g-tweet-crawler-k8s
     mkdir -p dev
     ls
-    sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" test.txt | \
-    sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/test.yaml
+    sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" tweet-crawler.yaml.template | \
+    sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/tweet-crawler.yaml
     echo "Pushing changes to git config repo ..."
     git config --global user.name sidkwon
     git config --global user.email annakie.kwon@gmail.com
