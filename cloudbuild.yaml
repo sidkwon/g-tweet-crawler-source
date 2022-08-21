@@ -83,17 +83,18 @@ steps:
     echo "Cloning repo ......"
     cd
     git clone --depth 1 git@github.com:sidkwon/g-tweet-crawler-k8s.git
+    git checkout dev
     echo "Updating image tag version ..."
     cd g-tweet-crawler-k8s
-    mkdir -p dev
+    # mkdir -p dev
     ls
     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" tweet-crawler.yaml.template | \
     sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/tweet-crawler.yaml
+    
     echo "Pushing changes to git config repo ..."
     git config --global user.name sidkwon
     git config --global user.email annakie.kwon@gmail.com
-    # git checkout -b dev
-    git checkout dev
+
     # git pull origin dev --allow-unrelated-histories
     git add -A
     git status
