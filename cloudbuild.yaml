@@ -89,7 +89,7 @@ steps:
     mkdir -p k8s
     ls
     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" tweet-crawler.yaml.template | \
-    sed "s/COMMIT_SHA/${SHORT_SHA}/g" > dev/tweet-crawler.yaml
+    sed "s/COMMIT_SHA/${SHORT_SHA}/g" > k8s/tweet-crawler.yaml
     
     echo "Pushing changes to git config repo ..."
     git config --global user.name sidkwon
