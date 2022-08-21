@@ -98,7 +98,7 @@ steps:
     git add -A
     git status
     git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
-    git push origin dev
+    git push origin main
   volumes:
   - name: 'ssh'
     path: /root/.ssh
