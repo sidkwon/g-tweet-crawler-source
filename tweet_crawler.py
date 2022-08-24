@@ -88,7 +88,7 @@ class TwitterStream(tweepy.StreamingClient):
         
         # Reformat data
         raw_data_to_dic = json.loads(raw_data.decode("utf-8"))
-        reformatted_data = raw_data_to_dic["data"]
+        reformatted_data = reformat_tweet(raw_data_to_dic["data"])
         
         # Print reformatted data
         print("-"*50)
