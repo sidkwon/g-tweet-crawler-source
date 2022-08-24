@@ -92,7 +92,7 @@ class TwitterStream(tweepy.StreamingClient):
         print(reformat_tweet(raw_data_to_dic["data"]))
         
         # Publish data to Cloud PubSub
-        # write_to_pubsub(reformat_tweet(raw_data_to_dic["data"]))
+        write_to_pubsub(reformat_tweet(raw_data_to_dic["data"]))
     def on_error(self, status_code):
         print(status_code)
         return False
