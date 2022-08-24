@@ -88,11 +88,15 @@ class TwitterStream(tweepy.StreamingClient):
         
         # Reformat data
         raw_data_to_dic = json.loads(raw_data.decode("utf-8"))
+        reformatted_data = raw_data_to_dic["data"])
+        
+        # Print reformatted data
         print("-"*50)
-        print(reformat_tweet(raw_data_to_dic["data"]))
+        print(reformatted_data)
         
         # Publish data to Cloud PubSub
-        write_to_pubsub(reformat_tweet(raw_data_to_dic["data"]))
+        write_to_pubsub(reformatted_data)
+        
     def on_error(self, status_code):
         print(status_code)
         return False
