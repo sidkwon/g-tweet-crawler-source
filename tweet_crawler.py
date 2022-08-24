@@ -1,6 +1,8 @@
 import tweepy
 import os
 import json
+import time
+import re
 
 from google.cloud import pubsub_v1
 from google.cloud import secretmanager
@@ -32,6 +34,20 @@ publisher = pubsub_v1.PublisherClient()
 topic_path = publisher.topic_path("arched-iterator-357101", "tweet-topic")
 tweet_fields = ["created_at", "lang", "geo", "author_id", "public_metrics"]
 
+def find_csp(data):
+    if "AWS" in data.upper():
+        csp = "AWS"
+    elif "AZURE" in data.upper():
+        csp = "Azure"
+    elif "#GOOGLECLOUD" in data.upper():
+        csp = "Google cloud"
+    elif "#GCP" in data.upper():
+        csp = "Google cloud" 
+    else:
+        csp = "Unknwon"
+    
+    return csp
+
 # Method to push messages to pubsub
 def write_to_pubsub(data):
     try:
@@ -51,7 +67,9 @@ def reformat_tweet(tweet):
         "tweet_id": x["id"],
         "author_id": x["author_id"],
         "lang": x["lang"],
-        "text": x["text"],
+        "text_raw": x["text"],
+        # "text_cleaned": text_preprocessing(x["text"]),
+        "csp": find_csp(x["text"]),
         "retweet_count": x["public_metrics"]["retweet_count"],
         "reply_count": x["public_metrics"]["reply_count"],
         "like_count": x["public_metrics"]["like_count"],
@@ -67,10 +85,14 @@ class TwitterStream(tweepy.StreamingClient):
         # type(raw_data): byte
         # type(raw_data.decode("utf-8")): str
         # type(json.loads(raw_data.decode("utf-8"))): dict
+        
+        # Reformat data
         raw_data_to_dic = json.loads(raw_data.decode("utf-8"))
-        print(raw_data_to_dic["data"])
         print("-"*50)
-        write_to_pubsub(reformat_tweet(raw_data_to_dic["data"]))
+        print(reformat_tweet(raw_data_to_dic["data"]))
+        
+        # Publish data to Cloud PubSub
+        # write_to_pubsub(reformat_tweet(raw_data_to_dic["data"]))
     def on_error(self, status_code):
         print(status_code)
         return False
@@ -99,7 +121,7 @@ delete_all_rules(rules)
 
 # 스트림 규칙 추가
 # client.add_rules(tweepy.StreamRule(value="#Googlecloud OR #AWS OR #Azure (lang:en OR lang:ja)"))
-client.add_rules(tweepy.StreamRule(value="#Googlecloud OR #AWS OR #Azure"))
+client.add_rules(tweepy.StreamRule(value="#Googlecloud #GCP OR #AWS OR #Azure"))
 
 # 스트림 시작
 # client.filter(expansions="author_id",tweet_fields="created_at")
