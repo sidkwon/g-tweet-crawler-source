@@ -3,6 +3,7 @@ import os
 import json
 import time
 import re
+from datetime import datetime
 
 from google.cloud import pubsub_v1
 from google.cloud import secretmanager
@@ -74,7 +75,7 @@ def reformat_tweet(tweet):
         "reply_count": x["public_metrics"]["reply_count"],
         "like_count": x["public_metrics"]["like_count"],
         "quote_count": x["public_metrics"]["quote_count"],
-        "created_at": x["created_at"]
+        "created_at": int(datetime.strptime(x["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%s"))
     }
 
     return processed_doc
