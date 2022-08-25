@@ -40,9 +40,11 @@ def find_csp(data):
         csp = "AWS"
     elif "AZURE" in data.upper():
         csp = "Azure"
-    elif "#GOOGLECLOUD" in data.upper():
+    elif "GOOGLECLOUD" in data.upper():
         csp = "Google cloud"
-    elif "#GCP" in data.upper():
+    elif "GCP" in data.upper():
+        csp = "Google cloud"
+    elif "GOOGLE" in data.upper():
         csp = "Google cloud" 
     else:
         csp = "Unknwon"
