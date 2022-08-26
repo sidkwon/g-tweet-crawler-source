@@ -77,7 +77,7 @@ def reformat_tweet(tweet):
         "reply_count": x["public_metrics"]["reply_count"],
         "like_count": x["public_metrics"]["like_count"],
         "quote_count": x["public_metrics"]["quote_count"],
-        "created_at": int(datetime.strptime(x["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%s"))
+        "created_at": datetime.strptime(x["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%s")
     }
 
     return processed_doc
