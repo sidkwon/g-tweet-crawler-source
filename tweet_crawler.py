@@ -36,18 +36,18 @@ topic_path = publisher.topic_path("arched-iterator-357101", "tweet-topic")
 tweet_fields = ["created_at", "lang", "geo", "author_id", "public_metrics"]
 
 def find_csp(data):
-    if "AWS" in data.upper():
-        csp = "AWS"
-    elif "AMAZON" in data.upper():
-        csp = "AWS"
-    elif "AZURE" in data.upper():
-        csp = "Azure"
-    elif "GOOGLECLOUD" in data.upper():
+    if "GOOGLECLOUD" in data.upper():
         csp = "Google cloud"
     elif "GCP" in data.upper():
         csp = "Google cloud"
     elif "GOOGLE" in data.upper():
         csp = "Google cloud" 
+    elif "AWS" in data.upper():
+        csp = "AWS"
+    elif "AMAZON" in data.upper():
+        csp = "AWS"
+    elif "AZURE" in data.upper():
+        csp = "Azure"
     else:
         csp = "Unknwon"
     
