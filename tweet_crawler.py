@@ -42,6 +42,8 @@ def find_csp(data):
         csp = "Google cloud"
     elif "GOOGLE" in data.upper():
         csp = "Google cloud" 
+    elif "BIGQUERY" in data.upper():
+        csp = "Google cloud" 
     elif "AWS" in data.upper():
         csp = "AWS"
     elif "AMAZON" in data.upper():
