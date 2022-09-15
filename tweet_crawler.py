@@ -132,7 +132,7 @@ delete_all_rules(rules)
 
 # 스트림 규칙 추가
 # client.add_rules(tweepy.StreamRule(value="#Googlecloud OR #AWS OR #Azure (lang:en OR lang:ja)"))
-client.add_rules(tweepy.StreamRule(value="#Googlecloud #GCP OR #AWS OR #Azure"))
+client.add_rules(tweepy.StreamRule(value="#Googlecloud #GCP OR #AWS OR #Azure OR #BigQuery"))
 
 # 스트림 시작
 # client.filter(expansions="author_id",tweet_fields="created_at")
